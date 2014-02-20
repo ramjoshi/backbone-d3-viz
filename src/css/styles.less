@@ -1,0 +1,36 @@
+body {
+
+  #map-viz {
+    float: left;
+    height: 600px;
+    width: 50%;
+
+    .neighborhood {
+      fill: rgb(21, 111, 128);
+      fill-opacity: .7;
+      stroke: #fff;
+      stroke-width: 1.5px;
+      &:hover {
+        fill: brown;
+        fill-opacity: .5;
+      }
+    }
+
+    .streets {
+      pointer-events: none;
+      .street {
+        fill: none;
+        stroke-width: 3px;
+      }
+    }
+  }
+
+  #viz-controls {
+    float: left;
+    width: 40%;
+    margin: 10px 0 0 70px;
+    .percentile-slider {
+      margin: 30px 0;
+    }
+  }
+}
