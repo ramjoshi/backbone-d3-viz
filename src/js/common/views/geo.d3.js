@@ -67,7 +67,7 @@ define([
       this._geoPathGenerator =
         d3.geo.path().projection(_.bind(this._project, this));
 
-      this.collection.on('reset', this._reset, this);
+      this.collection.on('sync reset', this._reset, this);
       this._map.on('viewreset', _.bind(this.reposition, this));
     },
 

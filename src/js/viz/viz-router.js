@@ -43,7 +43,6 @@ define([
 
     initCollections: function() {
       this.sfNeighborhoodFeatures = new Features();
-      this.sfStreetFeatures = new Features();
       this.sfNeighborhoods = new SfNeighborhoods();
       this.sfStreets = new SfStreets();
       this.sfHousingPrices = new SfHousingPrices();
@@ -65,8 +64,7 @@ define([
         className: 'streets',
         featureClassName: 'street',
         map: this.mapView.getMap(),
-        collection: this.sfStreetFeatures,
-        sfStreets: this.sfStreets
+        collection: this.sfStreets
       });
       this.vizControlsView = new VizControlsView({
         el: '#viz-controls'

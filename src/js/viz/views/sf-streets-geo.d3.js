@@ -15,17 +15,10 @@ define([
       this._colors = d3.scale.linear()
         .domain([0, 50, 70, 100])
         .range(["#F00", "#930", "#FC0", "#3B0"]);
-
-      this._sfStreets = options.sfStreets;
-      this._sfStreets.on('sync', this.onSfStreets, this);
     },
 
     getFeatureKey: function(feature) {
       return feature && feature.properties.CNN;
-    },
-
-    onSfStreets: function() {
-      this.collection.reset(this._sfStreets.models);
     },
 
     enter: function(selection) {
