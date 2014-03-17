@@ -14,14 +14,16 @@ define([
     tileLayers: {
       mapnikBW: {
         url: 'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
-        name: 'Mapnik B&W'
+        name: 'Mapnik B&W',
+        order: 0
       },
       mqTile: {
         url: 'http://mtile0{s}.mqcdn.com/tiles/1.0.0/vy/sat/{z}/{x}/{y}.png',
         options: {
           subdomains: '1234'
         },
-        name: 'Satellite'
+        name: 'Satellite',
+        order: 1
       }
     },
 
@@ -60,9 +62,11 @@ define([
     },
 
     addTileLayers: function() {
-      _.each(this._baseLayers, function(layer) {
-        layer.addTo(this._map);
-      }, this);
+      _.chain(this._tileLayers)
+        .sortBy('order')
+        .each(function(layer, layerKey) {
+          this._baseLayers[layerKey].addTo(this._map);
+        }, this);
     },
 
     /**
