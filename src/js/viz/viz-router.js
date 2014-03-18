@@ -5,6 +5,7 @@ define([
   'js/viz/collections/sf-streets',
   'js/viz/collections/sf-housing-prices',
   'js/viz/views/viz-page',
+  'js/viz/views/streets-legend',
   'js/common/views/map',
   'js/viz/views/sf-neighborhoods-geo.d3',
   'js/viz/views/sf-streets-geo.d3',
@@ -15,6 +16,7 @@ define([
             SfStreets,
             SfHousingPrices,
             VizPageView,
+            StreetsLegendView,
             MapView,
             SfNeighborhoodsGeoView,
             SfStreetsGeoView,
@@ -28,6 +30,7 @@ define([
       BaseRouter.prototype.initialize.apply(this, arguments);
 
       _.invoke([
+        this.streetsLegendView,
         this.mapView,
         this.sfNeighborhoodsGeoView,
         this.sfStreetsGeoView,
@@ -49,6 +52,10 @@ define([
     },
 
     initViews: function() {
+      this.streetsLegendView = new StreetsLegendView({
+        el: '#streets-legend',
+        colors: SfStreetsGeoView.PALETTE
+      });
       this.mapView = new MapView({
         el: '#map-viz'
       });

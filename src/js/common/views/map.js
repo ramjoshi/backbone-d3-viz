@@ -11,21 +11,21 @@ define([
       zoom: 4
     },
 
-    tileLayers: {
-      mapnikBW: {
-        url: 'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
-        name: 'Mapnik B&W',
-        order: 0
-      },
-      mqTile: {
+    tileLayers: [
+      {
+        id: 'mqTile',
         url: 'http://mtile0{s}.mqcdn.com/tiles/1.0.0/vy/sat/{z}/{x}/{y}.png',
         options: {
           subdomains: '1234'
         },
-        name: 'Satellite',
-        order: 1
-      }
-    },
+        name: 'Satellite'
+      },
+      {
+        id: 'mapnikBW',
+        url: 'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
+        name: 'Mapnik B&W'
+      },
+    ],
 
     _baseLayers: null,
 
@@ -55,27 +55,25 @@ define([
     },
 
     initBaseLayers: function() {
-      _.each(this.tileLayers, function(layer, layerKey) {
+      _.each(this.tileLayers, function(layer) {
         var layerOptions = layer.options || {};
-        this._baseLayers[layerKey] = L.tileLayer(layer.url, layerOptions);
+        this._baseLayers[layer.id] = L.tileLayer(layer.url, layerOptions);
       }, this);
     },
 
     addTileLayers: function() {
-      _.chain(this._tileLayers)
-        .sortBy('order')
-        .each(function(layer, layerKey) {
-          this._baseLayers[layerKey].addTo(this._map);
-        }, this);
+      _.each(this.tileLayers, function(layer) {
+        this._baseLayers[layer.id].addTo(this._map);
+      }, this);
     },
 
     /**
      * Add a widget to toggle between layers on the map.
      */
     addLayersToControl: function() {
-      _.each(this._baseLayers, function(layer, layerKey) {
-        var layerName = this.tileLayers[layerKey].name;
-        this._layersControl.addBaseLayer(layer, layerName);
+      _.each(this.tileLayers, function(layer) {
+        var baseLayer = this._baseLayers[layer.id];
+        this._layersControl.addBaseLayer(baseLayer, layer.name);
       }, this);
     },
 

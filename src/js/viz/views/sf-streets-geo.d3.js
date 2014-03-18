@@ -11,10 +11,9 @@ define([
     initialize: function(options) {
       GeoD3View.prototype.initialize.apply(this, arguments);
 
-
       this._colors = d3.scale.linear()
         .domain([0, 50, 70, 100])
-        .range(["#F00", "#930", "#FC0", "#3B0"]);
+        .range(this.constructor.PALETTE);
     },
 
     getFeatureKey: function(feature) {
@@ -28,5 +27,7 @@ define([
         d3.select(this).attr('stroke', self._colors(pci));
       });
     }
+  }, {
+    PALETTE: ["#F00", "#930", "#FC0", "#3B0"]
   });
 });
