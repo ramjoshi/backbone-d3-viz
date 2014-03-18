@@ -51,6 +51,9 @@ define([
         bounds: this._sliderConfig.bounds,
         defaultValues: this._sliderConfig.bounds,
         step: 10000,
+        formatter: function(val) {
+          return '$' + val;
+        }
       });
     },
 

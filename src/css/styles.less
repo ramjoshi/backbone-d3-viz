@@ -1,5 +1,19 @@
 body {
 
+  #streets-legend {
+    ul {
+      list-style-type: none;
+    }
+    li {
+      display: inline-block;
+      height: 10px;
+      width: 225px;
+      &:first-of-type {
+        width: 140px;
+      }
+    }
+  }
+
   #map-viz {
     float: left;
     height: 500px;
