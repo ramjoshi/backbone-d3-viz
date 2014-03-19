@@ -30,18 +30,22 @@ define([
       BaseRouter.prototype.initialize.apply(this, arguments);
 
       _.invoke([
+        this.sfNeighborhoods,
+        this.sfStreets,
+        this.sfHousingPrices
+      ], 'fetch');
+    },
+
+    onDomReady: function() {
+      BaseRouter.prototype.onDomReady.apply(this, arguments);
+      
+      _.invoke([
         this.streetsLegendView,
         this.mapView,
         this.sfNeighborhoodsGeoView,
         this.sfStreetsGeoView,
         this.vizControlsView
       ], 'render');
-
-      _.invoke([
-        this.sfNeighborhoods,
-        this.sfStreets,
-        this.sfHousingPrices
-      ], 'fetch');
     },
 
     initCollections: function() {

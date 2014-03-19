@@ -12,10 +12,10 @@ define([
       this.pageView = new this.PageView();
       this.initModels();
       this.initCollections();
-      $(document).ready(_.bind(this._onDomReady, this));
+      $(document).ready(_.bind(this.onDomReady, this));
     },
 
-    _onDomReady: function() {
+    onDomReady: function() {
       Backbone.history.start();
       this.pageView.render();
       this.initViews();
