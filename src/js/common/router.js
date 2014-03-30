@@ -5,22 +5,18 @@ define([
 
     PageView: null,
 
-    initDeferred: null,
-
     initialize: function() {
-      this.initDeferred = new $.Deferred();
       this.pageView = new this.PageView();
       this.initModels();
       this.initCollections();
-      $(document).ready(_.bind(this._onDomReady, this));
+      $(document).ready(_.bind(this.onDomReady, this));
     },
 
-    _onDomReady: function() {
+    onDomReady: function() {
       Backbone.history.start();
       this.pageView.render();
       this.initViews();
       this.initEvents();
-      this.initDeferred.resolve();
     },
 
     initModels: function() {},
