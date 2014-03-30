@@ -32,16 +32,14 @@ define([
 
     PageView: VizPageView,
 
-    sfHousingPricesDeferred: null,
-
     initialize: function() {
       BaseRouter.prototype.initialize.apply(this, arguments);
 
-      this.sfHousingPricesDeferred = this.sfHousingPrices.fetch();
       _.invoke([
         this.sfNeighborhoodsGeo,
         this.sfStreetsGeo,
-        this.sfHoods
+        this.sfHoods,
+        this.sfHousingPrices
       ], 'fetch');
     },
 
@@ -90,8 +88,7 @@ define([
         map: this.mapView.getMap(),
         collection: this.sfNeighborhoodFeatures,
         sfNeighborhoodsGeo: this.sfNeighborhoodsGeo,
-        sfHousingPrices: this.sfHousingPrices,
-        sfHousingPricesDeferred: this.sfHousingPricesDeferred
+        sfHousingPrices: this.sfHousingPrices
       });
       this.sfStreetsGeoView = new SfStreetsGeoView({
         className: 'streets',

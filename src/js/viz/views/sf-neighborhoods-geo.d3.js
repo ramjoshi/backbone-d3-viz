@@ -7,15 +7,13 @@ define([
   return GeoD3View.extend({
 
     _sfHousingPrices: null,
-    _sfHousingPricesDeferred: null,
+
+    _dataDeferred: null,
 
     initialize: function(options) {
       GeoD3View.prototype.initialize.apply(this, arguments);
 
-      _.bindAll(this,
-        'filter',
-        'onSfNeighborhoods'
-      );
+      _.bindAll(this, 'filter');
 
       this._colors = d3.scale.linear()
         .domain(this.constructor.PRICES)
@@ -23,24 +21,34 @@ define([
 
       this._sfNeighborhoodsGeo = options.sfNeighborhoodsGeo;
       this._sfHousingPrices = options.sfHousingPrices;
-      this._sfHousingPricesDeferred = options.sfHousingPricesDeferred;
 
-      this._sfNeighborhoodsGeo.on('sync', this.onSfNeighborhoods);
+      this._sfNeighborhoodsGeo.on('sync', this.reset, this);
+      this._sfHousingPrices.on('sync', this.reset, this);
     },
 
-    onSfNeighborhoods: function() {
-      $.when(this._sfHousingPricesDeferred).then(_.bind(function() {
-        this.collection.reset(this._sfNeighborhoodsGeo.models);
-      }, this));
+    reset: function() {
+      this.collection.reset(this._sfNeighborhoodsGeo.models);
     },
 
     enter: function(selection) {
+      this.colorByPrice(selection);
+    },
+
+    update: function(selection) {
+      this.colorByPrice(selection);
+    },
+
+    colorByPrice: function(selection) {
       var self = this;
       selection.each(function(data) {
-        var medianHousingPrice = self._sfHousingPrices.findWhere({
-          zip: parseInt(data.id)
-        }).get('zpctile50');
-        d3.select(this).attr('fill', self._colors(medianHousingPrice/10000));
+        var medianHousingPrice,
+          housingPrice = self._sfHousingPrices.findWhere({
+            zip: parseInt(data.id)
+          });
+        if (housingPrice) {
+          medianHousingPrice = housingPrice.get('zpctile50');
+          d3.select(this).attr('fill', self._colors(medianHousingPrice/10000));
+        }
       });
     },
 
