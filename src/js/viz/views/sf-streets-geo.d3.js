@@ -17,12 +17,17 @@ define([
     },
 
     getFeatureKey: function(feature) {
+
+      // Return a unique id for this geojson feature
       return feature && feature.properties.CNN;
     },
 
     enter: function(selection) {
       var self = this;
       selection.each(function(data) {
+
+        // Color each entering selection using a PCI score that indicates
+        // the quality of a pavement on a scale of 0 through 100
         var pci = data.properties.PCI;
         d3.select(this).attr('stroke', self._colors(pci));
       });

@@ -1,30 +1,30 @@
 /**
-* @fileoverview Defines a View that overlays geoJSON polygons using d3 on a
-* Leaflet map.
-* Renders polygons for geoJSON features in this.collection.
-* Handles projection and repositioning of polygons on map 'viewreset'.
-* Provides public methods enter(), exit() to animate polygons on
-* collection 'reset'.
-*
-* A collection of geoJSON features will be rendered on a map as path elements.
-* <svg>
-*   <g>
-*     <path d="">
-*     <path d="">
-*     ...
-*   </g>
-* </svg>
-* Each path corresponds to a geoJSON feature, ex. a clu
-* and represents the shape of the clu.
-*/
+ * @fileoverview Defines a View that overlays geoJSON polygons using d3 on a
+ * Leaflet map.
+ * Renders polygons for geoJSON features in this.collection.
+ * Handles projection and repositioning of polygons on map 'viewreset'.
+ * Provides public methods enter(), exit() to animate polygons on
+ * collection 'reset'.
+ *
+ * A collection of geoJSON features will be rendered on a map as path elements.
+ * <svg>
+ *   <g>
+ *     <path d="">
+ *     <path d="">
+ *     ...
+ *   </g>
+ * </svg>
+ * Each path corresponds to a geoJSON feature, ex. a clu
+ * and represents the shape of the clu.
+ */
 define([
-  'js/common/views/base',
+  'backbone',
   'd3',
   'leaflet'
-], function(BaseView,
+], function(Backbone,
             d3,
             L) {
-  return BaseView.extend({
+  return Backbone.View.extend({
 
     // The svg container element
     _containerEl: 'svg',
@@ -52,13 +52,13 @@ define([
     _featureClassName: null,
 
     /**
-    * @param {L.Map} options.map, a Leaflet map instance.
-    *
-    * @param {String} options.leafletPane, a leaflet pane
-    * Possible values for this property are enumerated at
-    * @link http://leafletjs.com/reference.html#map-panes
-    * Defaults to 'overlayPane'.
-    */
+     * @param {L.Map} options.map, a Leaflet map instance.
+     *
+     * @param {String} options.leafletPane, a leaflet pane
+     * Possible values for this property are enumerated at
+     * @link http://leafletjs.com/reference.html#map-panes
+     * Defaults to 'overlayPane'.
+     */
     initialize: function(options) {
       var leafletPane = options.leafletPane || 'overlayPane';
       this._map = options.map;
@@ -88,10 +88,10 @@ define([
     },
 
     /**
-    * Animates redrawing of polygons using d3's enter and exit selections.
-    * @see http://strongriley.github.io/d3/#enter_and_exit
-    * @private
-    */
+     * Animates redrawing of polygons using d3's enter and exit selections.
+     * @see http://strongriley.github.io/d3/#enter_and_exit
+     * @private
+     */
     _reset: function() {
       var enterSelection,
         exitSelection;
@@ -112,25 +112,25 @@ define([
     },
 
     /**
-    * @return {Array} of GeoJSON features to be projected on the map.
-    * @public
-    */
+     * @return {Array} of GeoJSON features to be projected on the map.
+     * @public
+     */
     getFeatures: function() {
       return this.collection.toGeoJson().features;
     },
 
     /**
-    * @return {String} a unique identifier for the feature.
-    * @protected
-    */
+     * @return {String} a unique identifier for the feature.
+     * @protected
+     */
     getFeatureKey: function(feature) {
       return feature && feature.id;
     },
 
     /**
-    * Bind d3 event handlers on entering nodes.
-    * @protected
-    */
+     * Bind d3 event handlers on entering nodes.
+     * @protected
+     */
     bindEvents: function(enterSelection) {
       enterSelection.on('mouseover', _.bind(this.onFeatureMouseOver, this))
         .on('mouseout', _.bind(this.onFeatureMouseOut, this))
@@ -138,48 +138,48 @@ define([
     },
 
     /**
-    * Update existing nodes.
-    * @param {Array} selection, d3 selection of existing nodes.
-    * @protected
-    */
+     * Update existing nodes.
+     * @param {Array} selection, d3 selection of existing nodes.
+     * @protected
+     */
     update: function(selection) {
     },
 
     /**
-    * Handles rendering of nodes for entering data elements.
-    * Entering data elements are those for which no corresponding dom nodes
-    * currently exists. This comes into effect when we are applying filters to
-    * elements and some elements get added and some filtered out.
-    * The words enter and exit are adopted from stage terminology.
-    * @see https://github.com/mbostock/d3/wiki/Selections#wiki-enter
-    *
-    * @param {Array} enterSelection, placeholder nodes for each data element
-    * for which no corresponding existing DOM element was found in the
-    * current selection.
-    *
-    * @protected
-    */
+     * Handles rendering of nodes for entering data elements.
+     * Entering data elements are those for which no corresponding dom nodes
+     * currently exists. This comes into effect when we are applying filters to
+     * elements and some elements get added and some filtered out.
+     * The words enter and exit are adopted from stage terminology.
+     * @see https://github.com/mbostock/d3/wiki/Selections#wiki-enter
+     *
+     * @param {Array} enterSelection, placeholder nodes for each data element
+     * for which no corresponding existing DOM element was found in the
+     * current selection.
+     *
+     * @protected
+     */
     enter: function(enterSelection) {},
 
     /**
-    * Handles rendering of nodes for exiting data elements.
-    * https://github.com/mbostock/d3/wiki/Selections#wiki-exit
-    *
-    * @param {Array} exitSelection, existing DOM elements in the current
-    * selection for which no new data element was found.
-    *
-    * @protected
-    */
+     * Handles rendering of nodes for exiting data elements.
+     * https://github.com/mbostock/d3/wiki/Selections#wiki-exit
+     *
+     * @param {Array} exitSelection, existing DOM elements in the current
+     * selection for which no new data element was found.
+     *
+     * @protected
+     */
     exit: function(exitSelection) {
       exitSelection.remove();
     },
 
     /**
-    * Reposition the SVG to cover the features.
-    * Code borrowed from @link http://bost.ocks.org/mike/leaflet/
-    *
-    * @protected
-    */
+     * Reposition the SVG to cover the features.
+     * Code borrowed from @link http://bost.ocks.org/mike/leaflet/
+     *
+     * @protected
+     */
     reposition: function() {
       if (!this._features) {
         return; // no features to reposition
@@ -203,14 +203,14 @@ define([
     },
 
     /**
-    * @return {Array} Projected bounding box for the given geoJSON, described
-    * in pixel points.
-    *
-    * A bounding box is a 2d Array  [​[left, bottom], [right, top]​],
-    * where left is the minimum longitude, bottom is the minimum latitude,
-    * right is maximum longitude, and top is the maximum latitude.
-    * @link https://github.com/mbostock/d3/wiki/Geo-Paths#wiki-bounds
-    */
+     * @return {Array} Projected bounding box for the given geoJSON, described
+     * in pixel points.
+     *
+     * A bounding box is a 2d Array  [​[left, bottom], [right, top]​],
+     * where left is the minimum longitude, bottom is the minimum latitude,
+     * right is maximum longitude, and top is the maximum latitude.
+     * @link https://github.com/mbostock/d3/wiki/Geo-Paths#wiki-bounds
+     */
     getBoundsPx: function() {
       var geoJSON = this.collection.toGeoJson();
       if (geoJSON.features.length == 0) return null;
@@ -218,13 +218,13 @@ define([
     },
 
     /**
-    * @param {Array} latLngPoint, a list containing two Numbers - [lon, lat]
-    * @return {Array} [x, y] projection in pixels for a point described in
-    * latitude, longitude.
-    * Code borrowed @link from http://bost.ocks.org/mike/leaflet/
-    *
-    * @private
-    */
+     * @param {Array} latLngPoint, a list containing two Numbers - [lon, lat]
+     * @return {Array} [x, y] projection in pixels for a point described in
+     * latitude, longitude.
+     * Code borrowed @link from http://bost.ocks.org/mike/leaflet/
+     *
+     * @private
+     */
     _project: function(latLngPoint) {
       var layerPoint =
         this._map.latLngToLayerPoint(
@@ -233,16 +233,16 @@ define([
     },
 
     /**
-    * @public
-    */
+     * @public
+     */
     addClass: function(className) {
       this._d3Container.classed(className, true);
       return this._d3Container;
     },
 
     /**
-    * @public
-    */
+     * @public
+     */
     removeClass: function(className) {
       this._d3Container.classed(className, false);
       return this._d3Container;
@@ -263,24 +263,24 @@ define([
     },
 
     /**
-    * @protected
-    */
+     * @protected
+     */
     onFeatureMouseOver: function(feature) {
       var featureEl = d3.select(d3.event.target);
       this.trigger('mouseover:feature', feature, featureEl);
     },
 
     /**
-    * @protected
-    */
+     * @protected
+     */
     onFeatureMouseOut: function(feature) {
       var featureEl = d3.select(d3.event.target);
       this.trigger('mouseout:feature', feature, featureEl);
     },
 
     /**
-    * @protected
-    */
+     * @protected
+     */
     onFeatureClick: function(feature) {
       d3.event.stopPropagation();
       var featureEl = d3.select(d3.event.target);
