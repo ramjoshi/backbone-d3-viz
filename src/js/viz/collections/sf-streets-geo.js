@@ -4,6 +4,6 @@ define([
 
   return Features.extend({
 
-    url: require.toUrl('json/viz/sf-streets.json')
+    url: '/data/json/sf-streets.json'
   });
 });

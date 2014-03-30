@@ -14,20 +14,21 @@ define([
         'onSfNeighborhoods'
       );
 
-      this._sfNeighborhoods = options.sfNeighborhoods;
+      this._sfNeighborhoodsGeo = options.sfNeighborhoodsGeo;
       this._sfHousingPrices = options.sfHousingPrices;
 
-      this._sfNeighborhoods.on('sync', this.onSfNeighborhoods);
+      this._sfNeighborhoodsGeo.on('sync', this.onSfNeighborhoods);
     },
 
     onSfNeighborhoods: function() {
-      this.collection.reset(this._sfNeighborhoods.models);
+      this.collection.reset(this._sfNeighborhoodsGeo.models);
     },
 
     filter: function(percentileValues) {
-      var filteredZips = this._sfHousingPrices
-        .filterByPercentileValues(percentileValues);
-      this.collection.reset(this._sfNeighborhoods.filterByZips(filteredZips));
+      var zips = this._sfHousingPrices
+          .filterByPercentileValues(percentileValues),
+        filteredNeighbsGeo = this._sfNeighborhoodsGeo.filterByZips(zips);
+      this.collection.reset(filteredNeighbsGeo);
     }
   });
 });

@@ -1,30 +1,11 @@
 define([
-  'backbone',
+  'js/common/collections/csv-collection',
   'csvjson'
-], function(Backbone) {
+], function(CsvCollection) {
 
-  return Backbone.Collection.extend({
+  return CsvCollection.extend({
 
-    url: require.toUrl('csv/viz/sf-housing-prices.csv'),
-
-    fetch: function(options) {
-      options = _.defaults({
-        dataType: 'text'
-      }, options || {});
-      Backbone.Collection.prototype.fetch.call(this, options);
-    },
-
-    parse: function(response) {
-      if (_.isObject(response)) {
-        return response;
-      } else {
-        var json = csvjson.csv2json(response, {
-          delim: ',',
-          textdelim: '\"'
-        });
-        return json.rows;
-      }
-    },
+    url: '/data/csv/sf-housing-prices.csv',
 
     filterByPercentileValues: function(percentileValues) {
       return this.chain().map(function(model) {

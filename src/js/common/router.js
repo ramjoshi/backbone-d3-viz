@@ -5,10 +5,7 @@ define([
 
     PageView: null,
 
-    initDeferred: null,
-
     initialize: function() {
-      this.initDeferred = new $.Deferred();
       this.pageView = new this.PageView();
       this.initModels();
       this.initCollections();
@@ -20,7 +17,6 @@ define([
       this.pageView.render();
       this.initViews();
       this.initEvents();
-      this.initDeferred.resolve();
     },
 
     initModels: function() {},

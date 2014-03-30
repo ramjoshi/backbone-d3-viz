@@ -1,22 +1,26 @@
 define([
   'js/common/router',
   'js/common/collections/features',
-  'js/viz/collections/sf-neighborhoods',
-  'js/viz/collections/sf-streets',
+  'js/viz/collections/sf-neighborhoods-geo',
+  'js/viz/collections/sf-streets-geo',
+  'js/viz/collections/sf-hoods',
   'js/viz/collections/sf-housing-prices',
   'js/viz/views/viz-page',
   'js/viz/views/streets-legend',
+  'js/viz/views/map-info',
   'js/common/views/map',
   'js/viz/views/sf-neighborhoods-geo.d3',
   'js/viz/views/sf-streets-geo.d3',
   'js/viz/views/viz-controls'
 ], function(BaseRouter,
             Features,
-            SfNeighborhoods,
-            SfStreets,
+            SfNeighborhoodsGeo,
+            SfStreetsGeo,
+            SfHoods,
             SfHousingPrices,
             VizPageView,
             StreetsLegendView,
+            MapInfoView,
             MapView,
             SfNeighborhoodsGeoView,
             SfStreetsGeoView,
@@ -30,8 +34,9 @@ define([
       BaseRouter.prototype.initialize.apply(this, arguments);
 
       _.invoke([
-        this.sfNeighborhoods,
-        this.sfStreets,
+        this.sfNeighborhoodsGeo,
+        this.sfStreetsGeo,
+        this.sfHoods,
         this.sfHousingPrices
       ], 'fetch');
     },
@@ -50,8 +55,9 @@ define([
 
     initCollections: function() {
       this.sfNeighborhoodFeatures = new Features();
-      this.sfNeighborhoods = new SfNeighborhoods();
-      this.sfStreets = new SfStreets();
+      this.sfNeighborhoodsGeo = new SfNeighborhoodsGeo();
+      this.sfStreetsGeo = new SfStreetsGeo();
+      this.sfHoods = new SfHoods();
       this.sfHousingPrices = new SfHousingPrices();
     },
 
@@ -59,6 +65,11 @@ define([
       this.streetsLegendView = new StreetsLegendView({
         el: '#streets-legend',
         colors: SfStreetsGeoView.PALETTE
+      });
+      this.mapInfoView = new MapInfoView({
+        el: '#map-info',
+        sfHoods: this.sfHoods,
+        sfHousingPrices: this.sfHousingPrices
       });
       this.mapView = new MapView({
         el: '#map-viz'
@@ -68,14 +79,14 @@ define([
         featureClassName: 'neighborhood',
         map: this.mapView.getMap(),
         collection: this.sfNeighborhoodFeatures,
-        sfNeighborhoods: this.sfNeighborhoods,
+        sfNeighborhoodsGeo: this.sfNeighborhoodsGeo,
         sfHousingPrices: this.sfHousingPrices
       });
       this.sfStreetsGeoView = new SfStreetsGeoView({
         className: 'streets',
         featureClassName: 'street',
         map: this.mapView.getMap(),
-        collection: this.sfStreets
+        collection: this.sfStreetsGeo
       });
       this.vizControlsView = new VizControlsView({
         el: '#viz-controls'
@@ -83,7 +94,10 @@ define([
     },
 
     initEvents: function() {
-      this.sfNeighborhoods.on('sync', this.onSfNeighborhoods, this);
+      this.sfNeighborhoodsGeo.on('sync', this.onSfNeighborhoods, this);
+
+      this.sfNeighborhoodsGeoView.on('mouseover:feature',
+        this.onSfNeighborhoodMouseover, this);
 
       this.vizControlsView.on('slider:change',
         this.sfNeighborhoodsGeoView.filter);
@@ -91,6 +105,11 @@ define([
 
     onSfNeighborhoods: function(collection) {
       this.mapView.fitFeatures(collection.toGeoJson());
+    },
+
+    onSfNeighborhoodMouseover: function(feature) {
+      this.mapInfoView.setZip(feature.id);
+      this.mapInfoView.render();
     }
   });
 });
