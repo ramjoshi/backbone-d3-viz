@@ -2,7 +2,7 @@
 
 ### A visualization using D3 + Leaflet + Backbone + RequireJS
 
-[![SF Pavements and Housing screenshot](http://ramjoshi.org/images/portfolio/sf-hood01.jpg)][sf-streets-housing] [![SF Pavements and Housing screenshot](http://ramjoshi.org/images/portfolio/sf-hood02.jpg)][sf-streets-housing] [![SF Pavements and Housing screenshot](http://ramjoshi.org/images/portfolio/sf-hood03.jpg)][sf-streets-housing] [![SF Pavements and Housing screenshot](http://ramjoshi.org/images/portfolio/sf-hood04.jpg)][sf-streets-housing]
+[![SF Pavements and Housing screenshot](http://ramjoshi.org/images/portfolio/sf-hood01.jpg)][sf-streets-housing] [![SF Pavements and Housing screenshot](http://ramjoshi.org/images/portfolio/sf-hood02.jpg)][sf-streets-housing] [![SF Pavements and Housing screenshot](http://ramjoshi.org/images/portfolio/sf-hood03.jpg)][sf-streets-housing]
 
 Live demo http://ramjoshi.org/sf-streets-housing/
 
