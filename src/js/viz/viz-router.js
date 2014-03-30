@@ -7,6 +7,7 @@ define([
   'js/viz/collections/sf-housing-prices',
   'js/viz/views/viz-page',
   'js/viz/views/streets-legend',
+  'js/viz/views/housing-prices-legend',
   'js/viz/views/map-info',
   'js/common/views/map',
   'js/viz/views/sf-neighborhoods-geo.d3',
@@ -20,6 +21,7 @@ define([
             SfHousingPrices,
             VizPageView,
             StreetsLegendView,
+            HousingPricesLegendView,
             MapInfoView,
             MapView,
             SfNeighborhoodsGeoView,
@@ -30,14 +32,16 @@ define([
 
     PageView: VizPageView,
 
+    sfHousingPricesDeferred: null,
+
     initialize: function() {
       BaseRouter.prototype.initialize.apply(this, arguments);
 
+      this.sfHousingPricesDeferred = this.sfHousingPrices.fetch();
       _.invoke([
         this.sfNeighborhoodsGeo,
         this.sfStreetsGeo,
-        this.sfHoods,
-        this.sfHousingPrices
+        this.sfHoods
       ], 'fetch');
     },
 
@@ -46,6 +50,7 @@ define([
       
       _.invoke([
         this.streetsLegendView,
+        this.housingPricesLegendView,
         this.mapView,
         this.sfNeighborhoodsGeoView,
         this.sfStreetsGeoView,
@@ -66,6 +71,11 @@ define([
         el: '#streets-legend',
         colors: SfStreetsGeoView.PALETTE
       });
+      this.housingPricesLegendView = new HousingPricesLegendView({
+        el: '#housing-prices-legend',
+        prices: SfNeighborhoodsGeoView.PRICES,
+        colors: SfNeighborhoodsGeoView.PALETTE
+      });
       this.mapInfoView = new MapInfoView({
         el: '#map-info',
         sfHoods: this.sfHoods,
@@ -80,7 +90,8 @@ define([
         map: this.mapView.getMap(),
         collection: this.sfNeighborhoodFeatures,
         sfNeighborhoodsGeo: this.sfNeighborhoodsGeo,
-        sfHousingPrices: this.sfHousingPrices
+        sfHousingPrices: this.sfHousingPrices,
+        sfHousingPricesDeferred: this.sfHousingPricesDeferred
       });
       this.sfStreetsGeoView = new SfStreetsGeoView({
         className: 'streets',
