@@ -72,8 +72,8 @@ define([
 The data files referenced in this project can be found at https://github.com/ramjoshi/data
 
 #### Inspired by
-- (Mike Bostock)[leaflet-d3]
-- (Stamen Studios)[stamen-studios]
+- [Mike Bostock][leaflet-d3]
+- [Stamen Studios][stamen-studios]
 - [Trulia]
 
 [sf-streets-housing]: https://portfolio.ramjoshi.com/sf-streets-housing "SF Pavement Quality and Housing Prices"
