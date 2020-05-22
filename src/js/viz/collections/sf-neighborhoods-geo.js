@@ -4,7 +4,7 @@ define([
 
   return Features.extend({
 
-    url: '/data/json/sf-neighborhoods-main.json',
+    url: '/src/data/json/sf-neighborhoods-main.json',
 
     filterByZips: function(zips) {
       return this.filter(function(model) {

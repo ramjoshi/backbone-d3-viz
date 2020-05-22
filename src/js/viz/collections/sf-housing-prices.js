@@ -5,7 +5,7 @@ define([
 
   return CsvCollection.extend({
 
-    url: '/data/csv/sf-housing-prices.csv',
+    url: '/src/data/csv/sf-housing-prices.csv',
 
     filterByPercentileValues: function(percentileValues) {
       return this.chain().map(function(model) {
