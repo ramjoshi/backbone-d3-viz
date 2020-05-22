@@ -14,15 +14,15 @@ define([
     tileLayers: [
       {
         id: 'mqTile',
-        url: 'https://mtile0{s}.mqcdn.com/tiles/1.0.0/vy/sat/{z}/{x}/{y}.png',
+        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         options: {
-          subdomains: '1234'
+          subdomains: 'abc'
         },
         name: 'Satellite'
       },
       {
         id: 'mapnikBW',
-        url: 'https://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
+        url: 'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
         name: 'Mapnik B&W'
       },
     ],
