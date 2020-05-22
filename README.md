@@ -2,25 +2,26 @@
 
 ### A visualization using D3 + Leaflet + Backbone + RequireJS
 
-[![SF Pavements and Housing screenshot](http://ramjoshi.org/images/portfolio/sf-hood01.jpg)][sf-streets-housing] [![SF Pavements and Housing screenshot](http://ramjoshi.org/images/portfolio/sf-hood02.jpg)][sf-streets-housing] [![SF Pavements and Housing screenshot](http://ramjoshi.org/images/portfolio/sf-hood03.jpg)][sf-streets-housing]
+[![SF Pavements and Housing screenshot](https://portfolio.ramjoshi.com/images/sf-hood01.jpg)][sf-streets-housing] [![SF Pavements and Housing screenshot](https://portfolio.ramjoshi.com/images/sf-hood02.jpg)][sf-streets-housing] [![SF Pavements and Housing screenshot](https://portfolio.ramjoshi.com/images/sf-hood03.jpg)][sf-streets-housing]
 
-Live demo http://ramjoshi.org/sf-streets-housing/
+Live demo https://sfrealty.ramjoshi.com/
 
 #### Projecting GeoJson data onto a Leaflet map using D3
 
 See [D3 + Leaflet by Mike Bostock] [leaflet-d3].  
 
-The core logic for projecting geojson using D3 is in [src/js/common/views/geo.d3.js] [].  
+The core logic for projecting geojson using D3 is in [src/js/common/views/geo.d3.js]
+
 This Backbone View manges the following functions
 - Rendering geojson on a map
 - Repositioning geojson svg when map bounds change
 - D3 update pattern for binding data to geojson and animation
 - Binding mouse events to geojson svg elements
 
-[src/js/common/views/geo.d3.js] [] is an abstract base class.
+[src/js/common/views/geo.d3.js] is an abstract base class.
 Each visualization extends geo.d3.js
-- [src/js/viz/views/sf-streets-geo.d3.js] [] renders the pavement quality geojson
-- [src/js/viz/views/sf-neighborhoods-geo.d3.js] [] renders the neighborhoods geojson
+- [src/js/viz/views/sf-streets-geo.d3.js] renders the pavement quality geojson
+- [src/js/viz/views/sf-neighborhoods-geo.d3.js] renders the neighborhoods geojson
 
 geo.d3.js defines update, enter and exit methods that can be overriden to create a D3 animation for geojson svg paths.
 For example, the pavement quality colors for streets are assigned in the D3 enter method of sf-streets-geo.d3.js.
@@ -71,14 +72,14 @@ define([
 The data files referenced in this project can be found at https://github.com/ramjoshi/data
 
 #### Inspired by
-- [Mike Bostock] [leaflet-d3]
-- [Stamen Studios] []
-- [Trulia] []
+- (Mike Bostock)[leaflet-d3]
+- (Stamen Studios)[stamen-studios]
+- [Trulia]
 
-[sf-streets-housing]: http://ramjoshi.org/sf-streets-housing "SF Pavement Quality and Housing Prices"
-[leaflet-d3]: http://bost.ocks.org/mike/leaflet/ "D3 + Leaflet"
+[sf-streets-housing]: https://portfolio.ramjoshi.com/sf-streets-housing "SF Pavement Quality and Housing Prices"
+[leaflet-d3]: https://bost.ocks.org/mike/leaflet/ "D3 + Leaflet"
 [src/js/common/views/geo.d3.js]: https://github.com/ramjoshi/sf-streets-housing/blob/master/src/js/common/views/geo.d3.js
 [src/js/viz/views/sf-streets-geo.d3.js]: https://github.com/ramjoshi/sf-streets-housing/blob/master/src/js/viz/views/sf-streets-geo.d3.js
 [src/js/viz/views/sf-neighborhoods-geo.d3.js]: https://github.com/ramjoshi/sf-streets-housing/blob/master/src/js/viz/views/sf-neighborhoods-geo.d3.js
-[Stamen Studios]: http://studio.stamen.com/open/polymaps-org/ex/streets.html
-[Trulia]: http://www.trulia.com/trends/vis/pricerange-sf/
+[stamen-studios]: https://studio.stamen.com/open/polymaps-org/ex/streets.html
+[Trulia]: https://www.trulia.com/trends/vis/pricerange-sf/

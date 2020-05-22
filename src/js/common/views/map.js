@@ -14,7 +14,7 @@ define([
     tileLayers: [
       {
         id: 'mqTile',
-        url: 'http://mtile0{s}.mqcdn.com/tiles/1.0.0/vy/sat/{z}/{x}/{y}.png',
+        url: 'https://mtile0{s}.mqcdn.com/tiles/1.0.0/vy/sat/{z}/{x}/{y}.png',
         options: {
           subdomains: '1234'
         },
@@ -22,7 +22,7 @@ define([
       },
       {
         id: 'mapnikBW',
-        url: 'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
+        url: 'https://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
         name: 'Mapnik B&W'
       },
     ],
