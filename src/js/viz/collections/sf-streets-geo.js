@@ -4,6 +4,6 @@ define([
 
   return Features.extend({
 
-    url: '/data/json/sf-streets.json'
+    url: '/src/data/json/sf-streets.json'
   });
 });
